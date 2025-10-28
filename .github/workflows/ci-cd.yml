@@ -5,8 +5,7 @@ on:
     branches:
       - main
       - master
-  repository_dispatch:
-    types: [deploy, build-and-deploy, trigger-ci]
+  workflow_dispatch:
 
 permissions:
   contents: write # required for the workflow to push back updated kustomization
