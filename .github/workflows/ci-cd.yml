@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - master
+  repository_dispatch:
+    types: [deploy, build-and-deploy, trigger-ci]
 
 permissions:
   contents: write # required for the workflow to push back updated kustomization
@@ -19,6 +21,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Display trigger info
+        run: |
+          echo "Workflow triggered by: ${{ github.event_name }}"
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "Dispatch event type: ${{ github.event.action }}"
+            echo "Client payload: ${{ toJson(github.event.client_payload) }}"
+          fi
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4

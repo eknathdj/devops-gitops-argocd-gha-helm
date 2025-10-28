@@ -44,10 +44,14 @@ It builds a simple Java (Spring Boot) app, scans the container and code for secu
 
 ## How the GitOps flow works in this example
 
-1. Developer pushes code to GitHub.
+1. Developer pushes code to GitHub OR triggers via repository dispatch.
 2. GitHub Actions builds the app, runs scans, builds and pushes the image to registry.
 3. The workflow updates the kustomize overlay image tag and commits to the repo.
 4. ArgoCD (configured to watch `/k8s/overlays/dev`) detects the change and syncs the cluster automatically.
+
+### Trigger Options
+- **Push to main/master**: Automatic trigger on code changes
+- **Repository Dispatch**: Remote API trigger (see `REPOSITORY_DISPATCH_GUIDE.md`)
 
 
 ## Helm chart

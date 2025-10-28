@@ -63,7 +63,11 @@ docker run -p 8080:8080 devops-sample-app
 
 ## Workflow Triggers
 
-The CI/CD pipeline triggers on pushes to `main` or `master` branches and will:
+The CI/CD pipeline triggers on:
+- **Push events**: Pushes to `main` or `master` branches
+- **Repository dispatch**: Remote API triggers (see `REPOSITORY_DISPATCH_GUIDE.md`)
+
+The workflow will:
 
 1. Build and test the Java application
 2. Run security scans (SpotBugs + Trivy)

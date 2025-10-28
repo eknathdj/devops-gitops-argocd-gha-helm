@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  repository_dispatch:
+    types: [deploy-simple, quick-deploy, trigger-simple-ci]
 
 permissions:
   contents: write
@@ -17,10 +19,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Display trigger info
+        run: |
+          echo "Workflow triggered by: ${{ github.event_name }}"
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "Dispatch event type: ${{ github.event.action }}"
+            echo "Client payload: ${{ toJson(github.event.client_payload) }}"
+          fi
+
       - uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: "17"
+          distribution: "temurin"
 
       - run: mvn -B clean compile test package
 
@@ -44,7 +54,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ steps.build-image.outputs.IMAGE }}
-          exit-code: '1'
+          exit-code: "1"
 
       - name: Update kustomization file (simple sed)
         run: |
