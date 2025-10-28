@@ -15,7 +15,7 @@ It builds a simple Java (Spring Boot) app, scans the container and code for secu
   - Builds and pushes Docker image to Docker Hub (or other registry).
   - Scans the built image using Trivy.
   - Updates `kustomization.yaml` in overlays/dev to set the new image tag and commits the change (so ArgoCD will sync).
-- DevSecOps scanning steps example (SpotBugs + Trivy).
+- DevSecOps scanning steps example (SpotBugs + Trivy) - configured in testing mode (non-blocking).
 
 > **NOTE:** No secrets are included. You must set repository secrets as documented below before running the workflow.
 
