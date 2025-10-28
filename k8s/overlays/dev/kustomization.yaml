@@ -4,4 +4,4 @@ resources:
   - ../../base
 images:
   - name: docker.io/eknathdj/cloudwave-api
-    newTag: "84774f26b38f6a1f5086536118f9d364214ae564"
+    newTag: "c01d88efa7ab9c35b5bbca411266b349989d6806"
