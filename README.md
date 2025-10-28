@@ -41,6 +41,8 @@ It builds a simple Java (Spring Boot) app, scans the container and code for secu
 - `k8s/base/*` and `k8s/overlays/dev/*` - kustomize manifests
 - `.github/workflows/ci-cd.yml` - GitHub Actions pipeline
 - `manifests/argocd/application.yaml` - ArgoCD Application manifest
+- `ARGOCD_SETUP_GUIDE.md` - Complete ArgoCD setup and usage guide
+- `verify-deployment.ps1` - PowerShell script to verify deployment status
 
 ## How the GitOps flow works in this example
 
