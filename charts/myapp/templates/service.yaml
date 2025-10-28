@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "devops-sample-app.fullname" . }}-svc
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "devops-sample-app.name" . }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080
+      protocol: TCP
+      name: http
