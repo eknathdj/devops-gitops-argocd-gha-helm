@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: devops-sample-svc
-  namespace: devops-sample
+  name: cloudwave-api-svc
+  namespace: cloudwave
 spec:
   type: ClusterIP
   selector:
-    app: devops-sample-app
+    app: cloudwave-api
   ports:
     - port: 80
       targetPort: 8080

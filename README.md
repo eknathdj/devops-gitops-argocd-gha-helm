@@ -1,5 +1,5 @@
 
-# DevOps GitOps Sample - ArgoCD + GitHub Actions (Java) + Helm
+# CloudWave API - GitOps with ArgoCD + GitHub Actions (Java) + Helm
 
 This repository is a scaffold to demonstrate a GitOps workflow using **ArgoCD** (for deployment) and **GitHub Actions** (for CI/CD).
 It builds a simple Java (Spring Boot) app, scans the container and code for security issues, pushes the image to a container registry, updates the Kustomize overlay image tag and commits it back so **ArgoCD** can pick up and deploy the change.
@@ -12,7 +12,7 @@ It builds a simple Java (Spring Boot) app, scans the container and code for secu
 - GitHub Actions workflow `.github/workflows/ci-cd.yml` that:
   - Builds Java app with Maven.
   - Runs static code analysis (SpotBugs via Maven).
-  - Builds and pushes Docker image to GitHub Container Registry (or other registry).
+  - Builds and pushes Docker image to Docker Hub (or other registry).
   - Scans the built image using Trivy.
   - Updates `kustomization.yaml` in overlays/dev to set the new image tag and commits the change (so ArgoCD will sync).
 - DevSecOps scanning steps example (SpotBugs + Trivy).
@@ -22,14 +22,14 @@ It builds a simple Java (Spring Boot) app, scans the container and code for secu
 ## Quickstart / Setup
 
 1. Create repository in GitHub and push this scaffold.
-2. Add the following repository secrets (example for GHCR):
-   - `REGISTRY`  -> `ghcr.io` (or docker.io)
-   - `REGISTRY_USERNAME` -> your registry username (or `GITHUB_ACTOR`)
-   - `REGISTRY_PASSWORD` -> a Personal Access Token that allows write:packages for GHCR or docker hub credentials
+2. Add the following repository secrets (example for Docker Hub):
+   - `REGISTRY`  -> `docker.io`
+   - `REGISTRY_USERNAME` -> your Docker Hub username
+   - `REGISTRY_PASSWORD` -> your Docker Hub password or access token
    - `GITHUB_TOKEN` is provided automatically in Actions; workflows that push back use it.
 3. Configure ArgoCD to connect to your Git server (or point ArgoCD to this repo) and create the ArgoCD Application using `manifests/argocd/application.yaml` OR let ArgoCD track this repo automatically.
 4. When workflow runs it will:
-   - Build & push image: `{{ registry }}/<owner>/devops-sample-app:<sha>`
+   - Build & push image: `{{ registry }}/<owner>/cloudwave-api:<sha>`
    - Update `k8s/overlays/dev/kustomization.yaml` `images` tag to the new tag and push the commit.
    - ArgoCD will detect the change and deploy.
 
@@ -37,7 +37,7 @@ It builds a simple Java (Spring Boot) app, scans the container and code for secu
 
 - `Dockerfile` - builds Java (OpenJDK) image
 - `pom.xml` - Maven project
-- `src/main/java/...` - simple Spring Boot app
+- `src/main/java/...` - CloudWave API Spring Boot app
 - `k8s/base/*` and `k8s/overlays/dev/*` - kustomize manifests
 - `.github/workflows/ci-cd.yml` - GitHub Actions pipeline
 - `manifests/argocd/application.yaml` - ArgoCD Application manifest
@@ -51,4 +51,4 @@ It builds a simple Java (Spring Boot) app, scans the container and code for secu
 
 
 ## Helm chart
-This repo now contains a Helm chart at `charts/myapp`. The CI updates `charts/myapp/values.yaml` with the image tag so ArgoCD (or `helm upgrade`) can pick up new versions.
+This repo contains a Helm chart at `charts/myapp` for CloudWave API. The CI updates `charts/myapp/values.yaml` with the image tag so ArgoCD (or `helm upgrade`) can pick up new versions.

@@ -14,7 +14,7 @@ public class DevopsSampleApplication {
 
     @GetMapping("/")
     public String hello() {
-        return "Hello from DevOps Sample Java app!";
+        return "Welcome to CloudWave API - Your Modern Microservice!";
     }
 
     @GetMapping("/health")

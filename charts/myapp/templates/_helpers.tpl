@@ -1,7 +1,7 @@
-{{- define "devops-sample-app.name" -}}
-devops-sample-app
+{{- define "cloudwave-api.name" -}}
+cloudwave-api
 {{- end -}}
 
-{{- define "devops-sample-app.fullname" -}}
-{{ include "devops-sample-app.name" . }}
+{{- define "cloudwave-api.fullname" -}}
+{{ include "cloudwave-api.name" . }}
 {{- end -}}

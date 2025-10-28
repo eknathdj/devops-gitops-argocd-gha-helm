@@ -12,9 +12,9 @@
 Configure these secrets in your GitHub repository settings:
 
 ```
-REGISTRY=ghcr.io                    # or docker.io for Docker Hub
-REGISTRY_USERNAME=YOUR_GITHUB_USERNAME
-REGISTRY_PASSWORD=YOUR_GITHUB_PAT   # Personal Access Token with packages:write scope
+REGISTRY=docker.io                  # Docker Hub registry
+REGISTRY_USERNAME=YOUR_DOCKER_HUB_USERNAME
+REGISTRY_PASSWORD=YOUR_DOCKER_HUB_PASSWORD   # Docker Hub password or access token
 ```
 
 ## Configuration Steps

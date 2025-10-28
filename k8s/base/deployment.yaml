@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-sample-app
-  namespace: devops-sample
+  name: cloudwave-api
+  namespace: cloudwave
   labels:
-    app: devops-sample-app
+    app: cloudwave-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: devops-sample-app
+      app: cloudwave-api
   template:
     metadata:
       labels:
-        app: devops-sample-app
+        app: cloudwave-api
     spec:
       containers:
-        - name: devops-sample-app
-          image: ghcr.io/eknathdj/devops-sample-app:latest
+        - name: cloudwave-api
+          image: docker.io/eknathdj/cloudwave-api:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

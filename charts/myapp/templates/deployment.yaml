@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "devops-sample-app.fullname" . }}
+  name: {{ include "cloudwave-api.fullname" . }}
   labels:
-    app: {{ include "devops-sample-app.name" . }}
+    app: {{ include "cloudwave-api.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "devops-sample-app.name" . }}
+      app: {{ include "cloudwave-api.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "devops-sample-app.name" . }}
+        app: {{ include "cloudwave-api.name" . }}
     spec:
       containers:
-        - name: {{ include "devops-sample-app.name" . }}
+        - name: {{ include "cloudwave-api.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

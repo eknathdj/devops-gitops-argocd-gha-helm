@@ -34,7 +34,7 @@ jobs:
       - name: Build and push image
         id: build-image
         run: |
-          IMAGE=${{ secrets.REGISTRY }}/${{ github.repository_owner }}/devops-sample-app
+          IMAGE=${{ secrets.REGISTRY }}/${{ github.repository_owner }}/cloudwave-api
           TAG=${{ github.sha }}
           docker build -t $IMAGE:$TAG .
           docker push $IMAGE:$TAG
