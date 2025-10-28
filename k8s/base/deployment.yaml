@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cloudwave-api
-          image: docker.io/eknathdj/cloudwave-api:latest
+          image: docker.io/eknathdj/cloudwave-api:c01d88efa7ab9c35b5bbca411266b349989d6806
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
