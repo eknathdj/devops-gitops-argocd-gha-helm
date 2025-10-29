@@ -4,6 +4,6 @@ resources:
   - ../../base
 images:
   - name: docker.io/eknathdj/cloudwave-api
-    newTag: "cb0071a88800c1528bd25e13a4c30f4a5e61dded"
+    newTag: "9f9da941f055a38aa7114b64694aff89e03fe2d1"
   - name: docker.io/eknathdj/cloudwave-wordpress
-    newTag: "cb0071a88800c1528bd25e13a4c30f4a5e61dded"
+    newTag: "9f9da941f055a38aa7114b64694aff89e03fe2d1"
