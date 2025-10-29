@@ -60,19 +60,37 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push image
-        id: build-image
+      - name: Build and push Java API image
+        id: build-java-image
         run: |
           IMAGE_NAME=${{ secrets.REGISTRY }}/${{ github.repository_owner }}/cloudwave-api
           TAG=${{ github.sha }}
-          echo "IMAGE=${IMAGE_NAME}:${TAG}" >> $GITHUB_OUTPUT
+          echo "JAVA_IMAGE=${IMAGE_NAME}:${TAG}" >> $GITHUB_OUTPUT
           docker build -t $IMAGE_NAME:${TAG} .
           docker push $IMAGE_NAME:${TAG}
 
-      - name: Scan image with Trivy
+      - name: Build and push WordPress image
+        id: build-wordpress-image
+        run: |
+          IMAGE_NAME=${{ secrets.REGISTRY }}/${{ github.repository_owner }}/cloudwave-wordpress
+          TAG=${{ github.sha }}
+          echo "WORDPRESS_IMAGE=${IMAGE_NAME}:${TAG}" >> $GITHUB_OUTPUT
+          docker build -f Dockerfile.wordpress -t $IMAGE_NAME:${TAG} .
+          docker push $IMAGE_NAME:${TAG}
+
+      - name: Scan Java API image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.build-image.outputs.IMAGE }}
+          image-ref: ${{ steps.build-java-image.outputs.JAVA_IMAGE }}
+          format: "table"
+          exit-code: "0" # set to 0 to continue pipeline even with vulnerabilities (for testing)
+          vuln-type: "os,library"
+        continue-on-error: true # Continue pipeline even if Trivy step fails
+
+      - name: Scan WordPress image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ steps.build-wordpress-image.outputs.WORDPRESS_IMAGE }}
           format: "table"
           exit-code: "0" # set to 0 to continue pipeline even with vulnerabilities (for testing)
           vuln-type: "os,library"
@@ -87,13 +105,15 @@ jobs:
         run: |
           helm lint charts/myapp || true
 
-      - name: Update kustomize image tag in overlay
+      - name: Update kustomize image tags in overlay
         env:
-          IMAGE: ${{ steps.build-image.outputs.IMAGE }}
+          JAVA_IMAGE: ${{ steps.build-java-image.outputs.JAVA_IMAGE }}
+          WORDPRESS_IMAGE: ${{ steps.build-wordpress-image.outputs.WORDPRESS_IMAGE }}
         run: |
-          echo "Updating kustomization with image $IMAGE"
+          echo "Updating kustomization with Java image $JAVA_IMAGE"
+          echo "Updating kustomization with WordPress image $WORDPRESS_IMAGE"
           FILE=k8s/overlays/dev/kustomization.yaml
-          # Simple sed replace for newTag
+          # Update both image tags
           sed -i "s/newTag: .*/newTag: \"${{ github.sha }}\"/" $FILE
 
       - name: Commit and push kustomization update

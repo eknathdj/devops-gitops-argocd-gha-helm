@@ -2,3 +2,10 @@ resources:
   - namespace.yaml
   - deployment.yaml
   - service.yaml
+  - mysql-secret.yaml
+  - mysql-pvc.yaml
+  - mysql-deployment.yaml
+  - mysql-service.yaml
+  - wordpress-deployment.yaml
+  - wordpress-service.yaml
+  - ingress.yaml

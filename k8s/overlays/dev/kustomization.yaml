@@ -4,4 +4,10 @@ resources:
   - ../../base
 images:
   - name: docker.io/eknathdj/cloudwave-api
+<<<<<<< Updated upstream
     newTag: "d91f94164e28b554c41792907daa39c6757ae73d"
+=======
+    newTag: "178e53b0f7d4f897b1fb90364161395e1b6cea41"
+  - name: docker.io/eknathdj/cloudwave-wordpress
+    newTag: "178e53b0f7d4f897b1fb90364161395e1b6cea41"
+>>>>>>> Stashed changes
